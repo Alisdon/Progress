@@ -1,0 +1,73 @@
+body,html{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border: 0 none;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-family: "Microsoft yahei";
+    min-width: 1050px;
+}
+dd,dl,dt,ul,ol,li,h1,h2,h3,h4,h5,h6 {
+    list-style: none;
+    padding:0;margin:0;
+    font-weight:normal;
+    font-size:100%;
+}
+.progress-content{
+    height: 60px;
+    min-height: 45px;
+}
+.step-list{
+    text-align:center;
+    float: left;
+    height:30%;
+    position: relative;
+}
+.step-list div{height: 100%;}
+.step-list .list-num{
+    display: inline-block;
+    border: 1px solid #eee;
+    width: 30px;
+    height: 30px;
+    font-size: 23px;
+    border-radius: 34px;
+    background: #eee;
+    cursor: default;
+    position: relative;
+    z-index: 1;
+}
+.step-list .step-line{
+    width: 96%;
+    display: inline-block;
+    background: #eee;
+    position: absolute;
+    top: 73%;
+    left: 52%;
+    height: 6px;
+    z-index: 0;
+}
+.progress-content .fa{
+    font-size: 40px;
+    color: #466faa;
+    cursor:pointer;
+}
+.step-list p{
+    color: #DDD;
+    width: 90%;
+    overflow:hidden;
+    cursor:default;
+    margin:15% auto;
+}
+.active.step-list p{color: #466faa;}
+.active.step-list .list-num{
+    background: #466faa;
+    color: #fff;
+    border: 1px solid #466faa;
+}
+.progress-content .fa.step-next{float: left;}
+.progress-content .fa.step-prev{float: right;}
+.active.step-list .step-line{background: #466faa;}
