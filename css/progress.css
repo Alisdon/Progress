@@ -60,7 +60,7 @@ dd,dl,dt,ul,ol,li,h1,h2,h3,h4,h5,h6 {
     width: 90%;
     overflow:hidden;
     cursor:default;
-    margin:15% auto;
+    margin:20px auto;
 }
 .active.step-list p{color: #466faa;}
 .active.step-list .list-num{
