@@ -1,13 +1,6 @@
 ﻿/**
- * Created by Zer壹 on 2017/3/6.
+ * Created by Alisdon on 2017/3/6.
  */
-
-$(document).ready(function (){
-        $('#progress').Progress();
-    }
-);
-
-
 ;(function($){
     /**
      * 进度条
@@ -22,11 +15,6 @@ $(document).ready(function (){
              * @type {number}
              */
             initstep: 1,
-            /**
-             * 进度条下方的文字说明
-             * @type {Array}
-             */
-            title:['第一步','第二步','第三步','第四步','第五步','第六步','第七步','第八步','第九步','第十步','第十一步'],
             /**
              * 进度条下一步事件，需返回值，若为true则继续进行流程，否则反之
              * @returns {boolean}
@@ -58,37 +46,41 @@ $(document).ready(function (){
 
         /**
          * 初始化进度条
-         * @param p
          * @returns {*|HTMLElement}
          */
 
-        var initProgress=function(p){
-            var $content=$('<ul class="progress-content"><li class="step-list"><i class="fa fa-chevron-left step-prev"></i>'
-                +'</li><li class="step-list"><i class="fa fa-chevron-right step-next"></i></li></ul>');
+        var initProgress=function(){
+            var stepChild=$self.find('.stepchild'),
+                $content=$('<ul class="progress-content">'
+                +'<li class="step-list"><i class="fa fa-chevron-left step-prev"></i></li>'
+                +'<li class="step-list"><i class="fa fa-chevron-right step-next"></i></li>'
+                +'</ul>');
 
-            for(var i=0;i<setting.title.length;i++){
+            for(var i=0;i<stepChild.length;i++){
                 var steplist=$('<li class="step-list"></li>'),
-                    stepdiv=$('<div><span class="list-num">' + (i + 1) + '</span></div>'),
-                    stepp=$('<p>' + setting.title[i] + '</p>');
+                    stepContainer=$('<div><span class="list-num">' + (i + 1) + '</span></div>'),
+                    stepDes=stepChild.eq(i).attr('stepDes'),
+                    stepp=$('<p>' + stepDes + '</p>');
 
                 if(i <= (setting.initstep-1)) steplist.addClass('active');
+                if(setting.line&&i != (stepChild.length - 1)) stepContainer.find('.list-num').before('<span class="step-line"></span>');
 
-                if(setting.line&&i != (setting.title.length - 1)) stepdiv.find('.list-num').before('<span class="step-line"></span>');
-
-                steplist.append(stepdiv,stepp);
+                steplist.append(stepContainer,stepp);
                 $content.find('li:last').before(steplist);
             }
 
             $content.find('.step-list').css({
-                width:(setting.title.length+2)>$self.width()?1+'%':100/(setting.title.length+2)+'%'
+                width:100/(stepChild.length+2)+'%'
             });
 
             $content.find('.step-next').on('click',function(e){
                 if(setting.nextStep && typeof setting.nextStep=='function'){
                     if(setting.nextStep()){
-                        var active=$self.find('.active');
+                        var active=$self.find('.step-list.active');
                         if(active.next().find('.list-num').length==active.length){
                             active.next().addClass('active');
+                            $self.find('.stepchild').removeClass('active');
+                            $self.find('.stepchild').eq(active.length).addClass('active');
                         }else{
                             if(setting.apply){
                                 if(setting.onSubmit && typeof setting.onSubmit=='function'){
@@ -112,10 +104,12 @@ $(document).ready(function (){
                         return;
                     }
                 }
-                var active=$self.find('.active');
+                var active=$self.find('.step-list.active');
                 if(active.length>1){
+                    $self.find('.stepchild').removeClass('active');
                     if(active.prev().find('.list-num').length==active.length-1){
                         $(active[active.length-1]).removeClass('active');
+                        $self.find('.stepchild').eq(active.length-2).addClass('active');
                     }
                 }
             });
@@ -124,7 +118,7 @@ $(document).ready(function (){
         };
 
         return this.each(function(){
-            $(this).append(initProgress());
+            $(this).find('div:first').before(initProgress());
         })
     }
 })(jQuery);

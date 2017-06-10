@@ -9,7 +9,6 @@ body{
     padding: 0;
     background: #fff;
     font-family: "Microsoft yahei";
-    min-width: 1050px;
 }
 dd,dl,dt,ul,ol,li,h1,h2,h3,h4,h5,h6 {
     list-style: none;
@@ -71,3 +70,5 @@ dd,dl,dt,ul,ol,li,h1,h2,h3,h4,h5,h6 {
 .progress-content .fa.step-next{float: left;}
 .progress-content .fa.step-prev{float: right;}
 .active.step-list .step-line{background: #466faa;}
+.stepchild{display: none;width:80%;margin: 20px auto;}
+.stepchild.active{display: block;}
