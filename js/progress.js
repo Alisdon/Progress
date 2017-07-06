@@ -52,22 +52,38 @@
         var initProgress=function(){
             var stepChild=$self.find('.stepchild'),
                 $content=$('<ul class="progress-content">'
-                +'<li class="step-list"><i class="fa fa-chevron-left step-prev"></i></li>'
-                +'<li class="step-list"><i class="fa fa-chevron-right step-next"></i></li>'
+                +'<li class="step-list prev"><i class="fa fa-chevron-left step-prev"></i></li>'
+                +'<li class="step-list next"><i class="fa fa-chevron-right step-next"></i></li>'
                 +'</ul>');
-
+	
             for(var i=0;i<stepChild.length;i++){
                 var steplist=$('<li class="step-list"></li>'),
                     stepContainer=$('<div><span class="list-num">' + (i + 1) + '</span></div>'),
                     stepDes=stepChild.eq(i).attr('stepDes'),
                     stepp=$('<p>' + stepDes + '</p>');
 
+                if(setting.line&&i != 0) stepContainer.find('.list-num').before('<span class="step-line"></span>');
+
                 if(i <= (setting.initstep-1)) steplist.addClass('active');
-                if(setting.line&&i != (stepChild.length - 1)) stepContainer.find('.list-num').before('<span class="step-line"></span>');
 
                 steplist.append(stepContainer,stepp);
                 $content.find('li:last').before(steplist);
             }
+
+            $content.find('.step-list').on('click',function(e){
+                if($(this).hasClass('next')||$(this).hasClass('prev')){return;
+                }else{
+                    var index=$('ul li').index(this);
+                    stepChild.removeClass('active');
+                    $content.find('.step-list').removeClass('active');
+                    stepChild.eq(index-1).addClass('active');
+                    for(var i=0;i<stepChild.length;i++){
+                        if(i<index){
+                            $($content.find('.step-list')[i+1]).addClass('active');
+                        };
+                    }
+                }
+            });
 
             $content.find('.step-list').css({
                 width:100/(stepChild.length+2)+'%'
